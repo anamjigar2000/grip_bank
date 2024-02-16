@@ -1,14 +1,14 @@
 <?php
-	//Local Development Connection requirement
-	$servername = "localhost";
-	$username = "root";
-	$password = "";
-	$dbname = "grip_bank";
+$hostname = "localhost"; // Your MySQL server hostname
+$username = "root"; // Your MySQL username
+$password = ""; // Your MySQL password
+$database = "grip_bank"; // Your MySQL database name
 
-	$conn = mysqli_connect($servername, $username, $password, $dbname);
+// Create connection
+$con = mysqli_connect($hostname, $username, $password, $database);
 
-	if(!$conn){
-		die("Could not connect to the database due to the following error --> ".mysqli_connect_error());
-	}
-
+// Check connection
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
+}
 ?>

@@ -1,9 +1,36 @@
 <?php
-	include 'config.php';
+	
+    $hostname = "localhost"; // Your MySQL server hostname
+    $username = "root"; // Your MySQL username
+    $password = ""; // Your MySQL password
+    $database = "grip_bank"; // Your MySQL database name
+    $conn = mysqli_connect($hostname, $username, $password, $database);
+    if (!$conn) 
+    {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+    $sql = "SELECT * FROM users";
+    $result = mysqli_query($conn, $sql);
+
+    // Check if 'id' parameter is set in the URL
+    if(isset($_GET['id'])) {
+        $sid = $_GET['id'];
+
+        $sql = "SELECT * FROM  users WHERE id=$sid";
+        $result = mysqli_query($conn, $sql);
+        if(!$result) {
+            echo "Error : ".$sql."<br>".mysqli_error($conn);
+        }
+        $rows = mysqli_fetch_assoc($result);
+    } else {
+        // Handle the case when 'id' parameter is not set
+        echo "No user ID specified.";
+        exit(); // Stop further execution
+    }
 
 	if(isset($_POST['submit']))
 	{
-		$from = $_GET['id'];
+		$from = $_GET['id']; // Assuming 'id' parameter is always set in the URL
 		$to = $_POST['to'];
 		$amount = $_POST['amount'];
 
@@ -118,7 +145,18 @@
 	<div class="container">
     <h2 class="text-center pt-4" style="color : black;">Transaction</h2>
     	<?php
-    		include 'config.php';
+			$hostname = "localhost"; // Your MySQL server hostname
+			$username = "root"; // Your MySQL username
+			$password = ""; // Your MySQL password
+			$database = "grip_bank"; // Your MySQL database name
+			$conn = mysqli_connect($hostname, $username, $password, $database);
+			if (!$conn) 
+			{
+			  die("Connection failed: " . mysqli_connect_error());
+			}
+			$sql = "SELECT * FROM users";
+			$result = mysqli_query($conn, $sql);
+		
 			$sid=$_GET['id'];
 			$sql = "SELECT * FROM  users where id=$sid";
 			$result=mysqli_query($conn,$sql);
@@ -129,7 +167,8 @@
 			$rows=mysqli_fetch_assoc($result);
 		?>
         
-		<form method="post" name="tcredit" class="tabletext" >
+		<form method="post" name="tcredit" class="tabletext" action="userdetails.php?id=<?php echo $_GET['id']; ?>">
+
 			<br/>
 			<div>
 				<table class="table table-striped table-hover">

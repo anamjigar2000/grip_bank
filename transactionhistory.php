@@ -37,8 +37,9 @@
             <a class="nav-link active" aria-current="page" href=" index.html ">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#services"> Services</a>
+            <a class="nav-link" href="transfermoney.php">Transfer Money</a>
           </li>
+          <li class="nav-item"><a class="nav-link" href="logout.php">Logout</a></li>
         </ul>
       </div>
     </div>
@@ -66,23 +67,32 @@
         <tbody>
         <?php
 
-include 'config.php';
-
+$hostname = "localhost"; // Your MySQL server hostname
+$username = "root"; // Your MySQL username
+$password = ""; // Your MySQL password
+$database = "grip_bank"; // Your MySQL database name
+$conn = mysqli_connect($hostname, $username, $password, $database);
+if (!$conn) 
+{
+  die("Connection failed: " . mysqli_connect_error());
+}
+$sql = "SELECT * FROM users";
+$result = mysqli_query($conn, $sql);
 $sql ="select * from transaction";
 
 $query =mysqli_query($conn, $sql);
 
-while($rows = mysqli_fetch_assoc($query))
-{
-?>
-<tr style="color : black;">
-            <td class="py-2"><?php echo $rows['sno']; ?></td>
-            <td class="py-2"><?php echo $rows['sender']; ?></td>
-            <td class="py-2"><?php echo $rows['receiver']; ?></td>
-            <td class="py-2"><?php echo $rows['balance']; ?> </td>
-            <td class="py-2"><?php echo $rows['datetime']; ?> </td>
-                
-        <?php
+          while($rows = mysqli_fetch_assoc($query))
+          {
+          ?>
+          <tr style="color : black;">
+                      <td class="py-2"><?php echo $rows['sno']; ?></td>
+                      <td class="py-2"><?php echo $rows['sender']; ?></td>
+                      <td class="py-2"><?php echo $rows['receiver']; ?></td>
+                      <td class="py-2"><?php echo $rows['balance']; ?> </td>
+                      <td class="py-2"><?php echo $rows['datetime']; ?> </td>
+                          
+                  <?php
             }
 
         ?>
